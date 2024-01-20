@@ -1,0 +1,74 @@
+.header__content {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  
+    padding-top: 2.75rem;
+
+    @media (min-width: 767.98px) {
+        align-items: center;
+    }
+  }
+
+  .content-header__logo {
+    visibility: hidden;
+
+    @media (min-width: 767.98px) {
+        visibility: visible;
+        margin-left: 64px;
+    }
+
+    &::after {
+        content: ' ';
+        position: absolute;
+        visibility: visible;
+        top: 2.5rem;
+        left: 1.25rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-size: cover;
+        cursor: pointer;
+        background-image: url('../images/header_svg/film.svg');
+        background-repeat: no-repeat;
+
+        @media(min-width: 767.98px) {
+            left: 2rem;
+            top: 2.9rem;
+        }
+      }
+     
+      
+  }
+  
+  
+  .nav__list {
+    display: flex;
+    gap: 2.5rem;
+    padding-right: 20px;
+    flex-wrap: wrap;
+    @media (max-width: 295px) {
+          gap: .625rem;
+        }
+  }
+  
+  .nav__item {
+    position: relative;
+  }
+  
+  .nav__link.active::before {
+    content: '';
+    padding-bottom: .1875rem;
+    height: 3px;
+    background-color: rgba(255, 0, 27, 1);
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+  }
+  
+  
+  
