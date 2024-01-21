@@ -1,0 +1,43 @@
+.pagination {
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+.arrows {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrows > button {
+  padding: 12px;
+  border-radius: 5px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+.arrows > button:hover {
+  background-color: #c0c0c0;
+}
+
+.arrow-right {
+  margin-right: 16px;
+}
+.arrow-left {
+  margin-left: 16px;
+}
+.arrow-left {
+  transform: rotate(-180deg);
+}
+
+.js-page-number.isactive {
+  padding: 13px 16px;
+  background-color: rgba(255, 107, 8, 1);
+  color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+}
+.js-list > button {
+  background-color: transparent;
+}
+
+.js-list > button:not(:last-child) {
+  margin-right: 16px;
+}

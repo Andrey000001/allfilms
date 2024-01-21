@@ -1,59 +1,150 @@
-const API_KEY = '8c1c21cb3de0f31fcce2cce049e2c70c';
-const BASE_URL_ALL = 'https://api.themoviedb.org/3/trending/all/day';
-const BASE_URL_GANRE = 'https://api.themoviedb.org/3/movie/';
+import refs from './js/refs';
+import fetchMovies from './js/fetchMovie';
+import { createMarkup } from './js/createMarkup';
+let page = 1;
 
-createMarkup();
-async function fetchMovies(page = 1) {
-  const response = await fetch(`${BASE_URL_ALL}?api_key=${API_KEY}&page=${page}`);
+
+const { API_KEY, BASE_URL_ALL, cards, arrowRight, arrowLeft } =
+  refs;
+
+init();
+async function init() {
+  const data = await fetchMovies(page);
+  await createMarkup(data);
+  updatePage();
+}
+const arrows = {
+    handleRightClick:  async () => {
+        page += 1;
+        try {
+          clearPage();
+          const data = await fetchMovies(page);
+          createMarkup(data);
+          updatePage();
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      handleLeftClick: async () => {
+        page -= 1;
+        try {
+          clearPage();
+          const data = await fetchMovies(page);
+          createMarkup(data);
+          updatePage();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+}
+
+const {handleLeftClick,handleRightClick} = arrows
+
+arrowLeft.addEventListener('click',handleLeftClick)
+arrowRight.addEventListener('click',handleRightClick)
+
+function clearPage() {
+  cards.innerHTML = '';
+}
+
+async function updatePage() {
+  const response = await fetch(
+    `${BASE_URL_ALL}?api_key=${API_KEY}&page=${page}`
+  );
   const data = await response.json();
 
-  const genreRequests = await data.results.map(async movieId => {
-    try {
-      const resp = await fetch(
-        `${BASE_URL_GANRE}${movieId.id}?api_key=${API_KEY}&include_image_language=en,null`
-      );
-      if (!resp.ok) {
-        throw new Error(resp.statusText);
-      }
-      const data = await resp.json();
-      return data;
-    } catch (error) {
-      console.log('Errorrrrrr', error);
+  const reft = {
+    totalPageCount: data.total_pages,
+    currentPage: page,
+    pageNumbers: [],
+    maxPageBtn: 9,
+    nearEdgeThreshold: 3,
+    pageNumbersHtml: document.querySelector('.js-list'),
+  };
+
+  const {
+    totalPageCount,
+    currentPage,
+    pageNumbers,
+    maxPageBtn,
+    nearEdgeThreshold,
+    pageNumbersHtml,
+  } = reft;
+
+  if (totalPageCount <= maxPageBtn) {
+    for (let i = 1; i <= totalPageCount; i += 1) {
+      pageNumbers.push(i);
     }
-  });
-  return Promise.all(genreRequests);
-}
-
-const jsCards = document.querySelector('.js-cards');
-
-async function createMarkup() {
-  try {
-    const data = await fetchMovies();
-    const successfulMoviesData = data.filter(movies => {
-      if (!movies || movies.poster_path === null) {
-        return;
+  } else {
+    // 1                 3  + 1
+    if (currentPage <= nearEdgeThreshold + 1) {
+      for (let i = 1; i <= maxPageBtn - 2; i += 1) {
+        pageNumbers.push(i);
       }
-      return movies;
-    });
-    const markup = successfulMoviesData
-      .map(({ title, poster_path, genres, release_date }) => {
-        let genr = genres.map(item => item.name).join(', ');
-        let dateMovie = release_date.slice(0, 4);
-
-        return `
-            <li class="page-item">
-               <a href="#" class="page-item__link">
-               <img src="https://image.tmdb.org/t/p/w500${poster_path}">
-               <div class="page-description">
-                   <h2 class="page-description__title">${title}</h2>
-                   <p class="page-description__podscription">${genr} <span>| ${dateMovie}</span></p>
-               </div>
-               </a>
-            </li>`;
-      })
-      .join(' ');
-    jsCards.insertAdjacentHTML('beforeend', markup);
-  } catch (error) {
-    console.log(error);
+      pageNumbers.push('...');
+      pageNumbers.push(totalPageCount);
+    } else if (currentPage >= totalPageCount - nearEdgeThreshold) {
+      pageNumbers.push(1);
+      pageNumbers.push('...');
+      for (
+        let i = totalPageCount - maxPageBtn + 3;
+        i <= totalPageCount;
+        i += 1
+      ) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1);
+      pageNumbers.push('...');
+      for (
+        let i = currentPage - nearEdgeThreshold;
+        i <= currentPage + nearEdgeThreshold;
+        i += 1
+      ) {
+        pageNumbers.push(i);
+      }
+      pageNumbers.push('...');
+      pageNumbers.push(totalPageCount);
+    }
   }
+
+  const pageNumbersHTML = pageNumbers
+    .map(number => {
+      if (number === '...') {
+        return `<span>${number}</span>`;
+      } else {
+        const activeClass = page === number ? 'isactive' : '';
+        page === 1 && number === 1 ? 'disabled' : '';
+        return `<button class="js-page-number ${activeClass}" data-page="${number}">${number}</button>`;
+      }
+    })
+    .join('');
+
+  pageNumbersHtml.innerHTML = pageNumbersHTML;
+
+  arrowRight.disabled = page === totalPageCount;
+  arrowLeft.disabled = page === 1;
+
+  document.querySelectorAll('.js-page-number').forEach(button => {
+    button.addEventListener('click', async () => {
+      const newPage = parseInt(button.dataset.page);
+      if (!isNaN(newPage)) {
+        page = newPage;
+        clearPage();
+        const data = await fetchMovies(page);
+        createMarkup(data);
+        updatePage();
+      }
+    });
+  });
 }
+
+
+
+
+
+
+
+
+
