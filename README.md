@@ -102,7 +102,3 @@ Pages, в ветку `gh-pages`, каждый раз когда обновляе
 
 
 
-@media (min-width: 767.98px) {
-   display: grid;
-   
-}

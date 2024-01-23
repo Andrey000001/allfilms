@@ -1,5 +1,5 @@
 import refs from "./refs";
-const { API_KEY, BASE_URL_ALL, BASE_URL_GENRE,} =
+const { API_KEY, BASE_URL_ALL, BASE_URL_GENRE} =
   refs;
 export default async function fetchMovies(page = 1) {
     //Получаем все фильмы 

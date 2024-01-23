@@ -1,0 +1,117 @@
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &-contant {
+    max-height: 940px;
+    margin-top: 20px;
+    background-color: $currentColorText;
+    padding: 48px 20px 40px 20px;
+  }
+  &-contant > img {
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  &-article__title {
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .info-modal__option {
+    line-height: 16px;
+    color: $modalTextSubscribe;
+    font-size: inherit;
+  }
+  .info-modal__lean {
+    line-height: 16px;
+    color: $modalTextSubscribe;
+  }
+  .info-modal__lean:not(:last-child) {
+    margin-bottom: 8px;
+  }
+  .info-modal__value {
+    color: #000000;
+  }
+  .info-modal {
+    margin-bottom: 20px;
+  }
+  .overage-modal {
+    margin-left: 41px;
+    padding: 1px 8px;
+    background-color: $backgroundForBnt-text;
+    border-radius: 5px;
+    color: $currentColorText;
+  }
+  .vote-modal {
+    padding: 1px 4px;
+    border-radius: 5px;
+    color: $textInfoFullName;
+    background-color: rgba(247, 247, 247, 1);
+
+  }
+  .title-modal {
+    text-transform: uppercase;
+  }
+  .info-modal__about {
+    font-weight: 500;
+    line-height: 16px; 
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .info-modal__overview {
+    line-height: 20px;
+    margin-bottom: 20px;
+  }
+  .popular-modal {
+    margin-left: 53px;
+  }
+  .title-modal {
+    margin-left: 39px;
+    display: inline-block;
+    width: 50%;
+  }
+  .genre-modal {
+    display: inline-flex;
+    margin-left: 76px;
+    width: 50%;
+  }
+
+
+  .modal-buttons {
+    justify-content: space-between;
+    display: flex;
+    gap: 20px;
+  }
+  .modal-buttons__watched {
+    padding: 6px 27px;
+    background-color: rgba(255, 107, 1, 1);
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    font-weight: 500;
+    line-height: 16px;
+    text-transform: uppercase;
+    border-color: transparent;
+    max-width: 110px;
+    max-height: 44px;
+    cursor: pointer;
+  }
+  .modal-buttons__queue {
+    padding: 12px;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+    text-transform: uppercase;
+    border-radius: 5px; 
+    color: #000;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid #000;
+    max-width: 110px;
+    max-height: 44px;
+    cursor: pointer;
+  }
+}

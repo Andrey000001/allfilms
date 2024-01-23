@@ -9,13 +9,14 @@ const { cards } = refs;
         }
         return movies;
       });
+
       const markup = successfulMoviesData
-        .map(({ title, poster_path, genres, release_date }) => {
+        .map(({ title, poster_path, genres, release_date ,id}) => {
           let genr = genres.map(item => item.name).join(', ');
           let dateMovie = release_date.slice(0, 4);
   
           return `
-              <li class="page-item">
+              <li class="page-item" data-id="${id}">
                  <a href="#" class="page-item__link">
                  <img src="https://image.tmdb.org/t/p/w500${poster_path}">
                  <div class="page-description">
