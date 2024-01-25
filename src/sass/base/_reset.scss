@@ -41,3 +41,6 @@ body {
   color: $textInfoFullName;
   background-color: $currentColorText;
 }
+.modal-open {
+  overflow: hidden;
+}

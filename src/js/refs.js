@@ -9,5 +9,7 @@ export default {
     cards: document.querySelector('.js-cards'),
     arrowRight: document.querySelector('.js-arrow-to_right'),
     arrowLeft: document.querySelector('.js-arrow-to_left'),
-    formSubmit: document.querySelector('.form-page')
+    formSubmit: document.querySelector('.form-page'),
+    logo: document.querySelector('.content-header__logo'),
+    pagination: document.querySelector('.pagination')
 }

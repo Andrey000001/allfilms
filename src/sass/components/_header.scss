@@ -1,68 +1,51 @@
-.header__content {
+.header {
   position: fixed;
-  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  padding-top: 2.75rem;
-
-  @media (min-width: 767.98px) {
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
+    padding-top: 44px;
   }
 }
-
 .content-header__logo {
-  visibility: hidden;
-
+  display: flex;
+  align-items: center;
   @media (min-width: 767.98px) {
-    visibility: visible;
-    margin-left: 64px;
+    margin-left: 34px;
   }
-
-  &::after {
+ 
+  &::before {
     content: ' ';
     position: absolute;
-    visibility: visible;
-    top: 2.5rem;
-    left: 1.25rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 24px;
+    height: 24px;
     background-size: cover;
     cursor: pointer;
     background-image: url('../images/header_svg/film.svg');
     background-repeat: no-repeat;
 
+    @media (min-width: 479.98px) {
+      width: 26px;
+      height: 26px;
+    }
     @media (min-width: 767.98px) {
-      left: 2rem;
-      top: 2.9rem;
+      width: 26px;
+      height: 26px;
+      transform: translate(-34px);
     }
   }
 }
-
 .nav__list {
   display: flex;
   gap: 2.5rem;
-  padding-right: 20px;
   flex-wrap: wrap;
-  @media (max-width: 295px) {
-    gap: 0.625rem;
-  }
 }
 
 .nav__item {
   position: relative;
 }
 
-.nav__link.active::before {
-  content: '';
-  padding-bottom: 0.1875rem;
-  height: 3px;
-  background-color: rgba(255, 0, 27, 1);
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 100%;
-}

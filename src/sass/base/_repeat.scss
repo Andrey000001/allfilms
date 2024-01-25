@@ -16,12 +16,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $currentColorText;
   border-radius: 5px;
   text-align: center;
-  background-color: $backgroundForBnt-text;
   font-weight: 500;
   font-size: 12px;
   line-height: 133.333%;
   text-transform: uppercase;
 }
+
+//HEADER
+.nav__link.active::before {
+  content: '';
+  padding-bottom: 0.1875rem;
+  height: 3px;
+  background-color: rgba(255, 0, 27, 1);
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+}
+

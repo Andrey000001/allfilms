@@ -1,7 +1,7 @@
 import refs from './refs';
 import clearPage from './clearPage';
-
-const { formSubmit, BASE_URL_QUERY, API_KEY, BASE_URL_GENRE, cards } = refs;
+import updateText from './updateText';
+const { formSubmit, BASE_URL_QUERY, API_KEY, BASE_URL_GENRE, cards ,logo ,pagination} = refs;
 
 export default function searchforNameMovie() {
   formSubmit.addEventListener('submit', async e => {
@@ -33,7 +33,7 @@ export default function searchforNameMovie() {
         return `
             <li class="page-item" data-id="${ids}">
                 <a href="#" class="page-item__link">
-                    <img src="https://image.tmdb.org/t/p/w500${poster_path}" alt="${title}">
+                    <img class="page-item__img" src="https://image.tmdb.org/t/p/w500${poster_path}" alt="${title}"/>
                     <div class="page-description">
                         <h2 class="page-description__title">${title}</h2>
                         <p class="page-description__podscription">${genre} ${releaseDate}</p>
@@ -43,6 +43,9 @@ export default function searchforNameMovie() {
       })
     );
     clearPage();
+    pagination.style.display = 'none'
     cards.innerHTML = renderingMarkup.join(' ');
   });
 }
+
+updateText()

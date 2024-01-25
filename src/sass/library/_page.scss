@@ -1,0 +1,51 @@
+.page-search-lb {
+    background: url('../images/library/header/library-S-min.jpg');
+    background-repeat: no-repeat;
+    width: 100%;
+    padding-top: 118px;
+    background-size: 100%;
+    padding-bottom: 92px;
+    height: 230px;
+    @media (max-width: 310.98px) {
+        padding-top: 85px;
+    }
+    @media (min-width: 767.98px) {
+        background: url('../images/library/header/library-M-min.jpg') no-repeat;
+        height: auto;
+        background-size: 100%;
+    }
+    @media (min-width: 900.98px) {
+        background: url('../images/library/header/library-L-min.jpg') no-repeat;
+        background-size: 100%;
+    }
+}
+
+.buttons-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    @media (min-width: 310px) {
+        gap: 20px; 
+    }
+    @media (min-width: 767.98px)  {
+        gap: 34px; 
+    }
+    @media (min-width: 900.98px) {
+        gap: 16px; 
+    }
+    &-watched  {
+        max-width: 130px;
+        padding: 14px 36px;
+        color: rgba(255, 255, 255, 1);
+        background-color: rgba(255, 107, 1, 1);
+    
+    }
+    &-queue {
+        color: rgba(255, 255, 255, 1);
+        background-color: transparent;
+        max-width: 130px;
+        padding: 14px 46px;
+        border: 1px solid rgba(255, 255, 255, 1);
+    }
+}
