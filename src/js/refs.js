@@ -11,5 +11,7 @@ export default {
     arrowLeft: document.querySelector('.js-arrow-to_left'),
     formSubmit: document.querySelector('.form-page'),
     logo: document.querySelector('.content-header__logo'),
-    pagination: document.querySelector('.pagination')
+    pagination: document.querySelector('.pagination'),
+    //btn
+    watchedList: document.querySelector('.js-list-watched')
 }

@@ -5,10 +5,9 @@ import searchforNameMovie from './js/serchMovie';
 import updatePage from './js/plagination';
 import clearPage from './js/clearPage';
 import touchMovieInfo from './js/currentMuvie';
-
 let page = 1;
 
-const { cards, arrowRight, arrowLeft, formSubmit } = refs;
+const { arrowRight ,arrowLeft } = refs;
 
 init();
 
@@ -49,6 +48,5 @@ arrowLeft.addEventListener('click', handleLeftClick);
 arrowRight.addEventListener('click', handleRightClick);
 
 searchforNameMovie();
-
-
 touchMovieInfo()
+
