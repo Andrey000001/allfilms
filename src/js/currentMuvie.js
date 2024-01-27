@@ -1,5 +1,6 @@
 import refs from './refs';
 import addMovieToWatched from './addToWatched';
+import addToQueue from './addToQueue';
 const { BASE_URL_GENRE, API_KEY } = refs;
 
 const modalContainer = document.createElement('div');
@@ -10,16 +11,15 @@ modalContainer.style.display = 'none';
 export default async function touchMovieInfo() {
   document.body.addEventListener('click', onOpen);
 
-  async function onOpen(e) {
+async function onOpen(e) {
     const pageItem = e.target.closest('.page-item');
     if (pageItem) {
-      document.body.classList.add('modal-open')
+      document.body.classList.add('modal-open');
       const gotId = pageItem.dataset.id;
       const response = await fetch(
         `${BASE_URL_GENRE}${gotId}?api_key=${API_KEY}`
       );
       const data = await response.json();
-
 
       const {
         genres,
@@ -30,24 +30,25 @@ export default async function touchMovieInfo() {
         original_title,
         popularity,
         overview,
-        release_date
+        release_date,
       } = data;
 
       const genreS = genres.map(({ name }) => name).join(' | ');
       const overage = vote_average.toString().slice(0, 3);
       const vote = vote_count.toString();
 
-      const overviwW = overview.length > 550 ? overview.slice(0, 550) + '...' : overview;
-     console.log(data);
+      const overviwW =
+        overview.length > 550 ? overview.slice(0, 550) + '...' : overview;
+      console.log(data);
       // LOCAL STORAGE
-      const localStorageSave = { 
+      const localStorageSave = {
         gotId,
         poster_path,
         title,
         genres,
         overage,
-        release_date
-      }
+        release_date,
+      };
 
       function checkCorect(num) {
         const parseValue = parseFloat(num);
@@ -85,7 +86,7 @@ export default async function touchMovieInfo() {
                           </div>
                           <div class="modal-buttons">
                            <button class="modal-buttons__watched modal-button js-modal__watched">add to Watched</button>
-                          <button class="modal-buttons__queue modal-button">add   to queue</button>
+                          <button class="modal-buttons__queue modal-button js-modal__queue">add to queue</button>
                           </div>
                       </article>
                      </div>
@@ -97,14 +98,17 @@ export default async function touchMovieInfo() {
       modalContainer.innerHTML = backdrop;
 
       const modalWatched = document.querySelector('.js-modal__watched');
-      addMovieToWatched(modalWatched,localStorageSave)
-    } 
+      const modalQueue = document.querySelector('.js-modal__queue')
+      addMovieToWatched(modalWatched, localStorageSave);
+      addToQueue(modalQueue,localStorageSave)
     }
-    function onCloseModal(e) {
-      if (!e.target.closest('.modal-contant')) {
-        document.body.classList.remove('modal-open')
-        modalContainer.style.display = 'none';
-        document.body.removeEventListener('click', onCloseModal);
-      }
+  }
+  function onCloseModal(e) {
+    if (!e.target.closest('.modal-contant')) {
+      document.body.classList.remove('modal-open');
+      modalContainer.style.display = 'none';
+      document.body.removeEventListener('click', onCloseModal);
+    }
   }
 }
+

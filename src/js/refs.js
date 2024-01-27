@@ -13,5 +13,7 @@ export default {
     logo: document.querySelector('.content-header__logo'),
     pagination: document.querySelector('.pagination'),
     //btn
-    watchedList: document.querySelector('.js-list-watched')
+    watchedList: document.querySelector('.js-list-watched'),
+    watched: document.getElementById('watched'),
+    queue: document.getElementById('queue')
 }

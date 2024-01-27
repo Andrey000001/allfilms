@@ -8,7 +8,6 @@ export default async function updatePage(page = 1) {
   const response = await fetch(
     `${BASE_URL_ALL}?api_key=${API_KEY}&page=${page}`
   );
-  console.log(page);
   const data = await response.json();
 
   const reft = {
@@ -71,8 +70,9 @@ export default async function updatePage(page = 1) {
       if (number === '...') {
         return `<span>${number}</span>`;
       } else {
+
+
         const activeClass = page === number ? 'isactive' : '';
-        page === 1 && number === 1 ? 'disabled' : '';
         return `<button class="js-page-number ${activeClass}" data-page="${number}">${number}</button>`;
       }
     })
@@ -86,12 +86,12 @@ export default async function updatePage(page = 1) {
   document.querySelectorAll('.js-page-number').forEach(button => {
     button.addEventListener('click', async () => {
       const newPage = parseInt(button.dataset.page);
+      console.log(newPage);
       if (!isNaN(newPage)) {
-        page = newPage;
         clearPage();
         const data = await fetchMovies(page);
         createMarkup(data);
-        updatePage();
+        updatePage(newPage);
       }
     });
   });

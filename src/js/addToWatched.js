@@ -1,15 +1,17 @@
-import refs from "./refs";
-export default function addMovieToWatched(watched ,localStr) {
-    watched.addEventListener('click',(e) => {
-        const savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
-        const existingMovieIndex = savedMovies.findIndex(({id}) => id === localStr.id) 
+export default function addMovieToWatched(watchedD ,localStr) {
+    watchedD.addEventListener('click',() => {
+        const isWatched = true
+        localStr.isWatched = isWatched
+        const savedMoviesWatched = JSON.parse(localStorage.getItem('savedMoviesWat')) || [];
+        const existingMovieIndex = savedMoviesWatched.findIndex(({gotId}) => gotId === localStr.gotId)
         if(existingMovieIndex === -1) {
-            savedMovies.push(localStr);
+            savedMoviesWatched.push(localStr);
             console.log('Фильм добавлен в сохраненные');
-            localStorage.setItem('savedMovies',JSON.stringify(savedMovies))
+            localStorage.setItem('savedMoviesWat',JSON.stringify(savedMoviesWatched))
         }else { 
             console.log('Фильм уже есть');
         }
     })
 }
+
 
