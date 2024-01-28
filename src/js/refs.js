@@ -15,5 +15,7 @@ export default {
     //btn
     watchedList: document.querySelector('.js-list-watched'),
     watched: document.getElementById('watched'),
-    queue: document.getElementById('queue')
+    queue: document.getElementById('queue'),
+    pageEl: document.querySelector('.page'),
+    pageItem: document.querySelector('.page-item')
 }

@@ -2,9 +2,11 @@ import refs from './refs';
 import { createMarkup } from './createMarkup';
 import clearPage from './clearPage';
 import fetchMovies from './fetchMovie';
-const { API_KEY, BASE_URL_ALL, arrowRight, arrowLeft } = refs;
+const { API_KEY, BASE_URL_ALL, arrowRight, arrowLeft ,cards } = refs;
 
 export default async function updatePage(page = 1) {
+
+  //Запрос
   const response = await fetch(
     `${BASE_URL_ALL}?api_key=${API_KEY}&page=${page}`
   );
@@ -27,7 +29,7 @@ export default async function updatePage(page = 1) {
     nearEdgeThreshold,
     pageNumbersHtml,
   } = reft;
-
+  //Проверка на страницы 
   if (totalPageCount <= maxPageBtn) {
     for (let i = 1; i <= totalPageCount; i += 1) {
       pageNumbers.push(i);
@@ -65,21 +67,20 @@ export default async function updatePage(page = 1) {
     }
   }
 
+  //Добовляем isactive на кнопку 
   const pageNumbersHTML = pageNumbers
     .map(number => {
       if (number === '...') {
         return `<span>${number}</span>`;
       } else {
-
-
         const activeClass = page === number ? 'isactive' : '';
         return `<button class="js-page-number ${activeClass}" data-page="${number}">${number}</button>`;
       }
     })
     .join('');
 
-  pageNumbersHtml.innerHTML = pageNumbersHTML;
 
+  pageNumbersHtml.innerHTML = pageNumbersHTML;
   arrowRight.disabled = page === totalPageCount;
   arrowLeft.disabled = page === 1;
 

@@ -38,12 +38,24 @@
         padding: 14px 36px;
         color: rgba(255, 255, 255, 1);
         background-color: rgba(255, 107, 1, 1);
-    
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
     &-queue {
         color: rgba(255, 255, 255, 1);
         background-color: transparent;
         padding: 14px 46px;
         border: 1px solid rgba(255, 255, 255, 1);
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
+    &-queue:hover,
+    &-queue:active {
+      color: rgba(255, 107, 1, 1);
+      border-color: rgba(255, 107, 1, 1);
+    }
+    &-watched:hover,
+    &-watched:active {
+        background-color: rgba(218, 102, 20, 1);
+    } 
 }

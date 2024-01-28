@@ -1,3 +1,4 @@
+import { Notify } from "notiflix";
 export default function addMovieToWatched(watchedD ,localStr) {
     watchedD.addEventListener('click',() => {
         const isWatched = true
@@ -6,12 +7,10 @@ export default function addMovieToWatched(watchedD ,localStr) {
         const existingMovieIndex = savedMoviesWatched.findIndex(({gotId}) => gotId === localStr.gotId)
         if(existingMovieIndex === -1) {
             savedMoviesWatched.push(localStr);
-            console.log('Фильм добавлен в сохраненные');
+            Notify.success('Added to library looked');
             localStorage.setItem('savedMoviesWat',JSON.stringify(savedMoviesWatched))
         }else { 
-            console.log('Фильм уже есть');
+            Notify.info('Already added');
         }
     })
 }
-
-

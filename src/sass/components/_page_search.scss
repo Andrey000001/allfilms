@@ -15,7 +15,8 @@
   }
   @media (min-width: 900.98px) {
     background: url('../images/header_background/headerDesktop-min.jpg') no-repeat;
-    background-size: 100%;
+    background-size: cover;
+    background-position: center;
   }
 }
 
