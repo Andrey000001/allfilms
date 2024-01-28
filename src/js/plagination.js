@@ -2,16 +2,16 @@ import refs from './refs';
 import { createMarkup } from './createMarkup';
 import clearPage from './clearPage';
 import fetchMovies from './fetchMovie';
-const { API_KEY, BASE_URL_ALL, arrowRight, arrowLeft ,cards } = refs;
+
+const { API_KEY, BASE_URL_ALL, arrowRight, arrowLeft } = refs;
 
 export default async function updatePage(page = 1) {
-
   //Запрос
   const response = await fetch(
     `${BASE_URL_ALL}?api_key=${API_KEY}&page=${page}`
   );
   const data = await response.json();
-
+ 
   const reft = {
     totalPageCount: data.total_pages,
     currentPage: page,
@@ -20,7 +20,7 @@ export default async function updatePage(page = 1) {
     nearEdgeThreshold: 3,
     pageNumbersHtml: document.querySelector('.js-list'),
   };
-
+  
   const {
     totalPageCount,
     currentPage,
@@ -29,12 +29,13 @@ export default async function updatePage(page = 1) {
     nearEdgeThreshold,
     pageNumbersHtml,
   } = reft;
-  //Проверка на страницы 
+
+  // Проверка на страницы 
   if (totalPageCount <= maxPageBtn) {
-    for (let i = 1; i <= totalPageCount; i += 1) {
+    for (let i = 1; i <= totalPageCount; i++) {
       pageNumbers.push(i);
     }
-  } else {
+  }else {
     // 1                 3  + 1
     if (currentPage <= nearEdgeThreshold + 1) {
       for (let i = 1; i <= maxPageBtn - 2; i += 1) {
@@ -66,10 +67,9 @@ export default async function updatePage(page = 1) {
       pageNumbers.push(totalPageCount);
     }
   }
-
   //Добовляем isactive на кнопку 
   const pageNumbersHTML = pageNumbers
-    .map(number => {
+    .map((number) => {
       if (number === '...') {
         return `<span>${number}</span>`;
       } else {
@@ -84,7 +84,7 @@ export default async function updatePage(page = 1) {
   arrowRight.disabled = page === totalPageCount;
   arrowLeft.disabled = page === 1;
 
-  document.querySelectorAll('.js-page-number').forEach(button => {
+  document.querySelectorAll('.js-page-number').forEach((button) => {
     button.addEventListener('click', async () => {
       const newPage = parseInt(button.dataset.page);
       console.log(newPage);
