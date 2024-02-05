@@ -8,5 +8,5 @@
     </div>
     
     </a>
-    </li>`).join(" ")}function c(){s.innerHTML="",s.insertAdjacentHTML("beforeend",o(l))}c(),d.addEventListener("click",c);var r=i("4Nugj");let{watchedList:p,queue:u}=r.default,f=JSON.parse(localStorage.getItem("savedMovieQueue"));u.addEventListener("click",()=>{p.innerHTML="",p.insertAdjacentHTML("beforeend",o(f))});var g=i("9OMvP");(0,n.default)(),(0,g.default)()}();
-//# sourceMappingURL=library.acd4fe38.js.map
+    </li>`).join(" ")}function c(e){s.innerHTML="",s.insertAdjacentHTML("beforeend",o(l))}c(),d.addEventListener("click",c);var r=i("4Nugj");let{watchedList:p,queue:u}=r.default,f=JSON.parse(localStorage.getItem("savedMovieQueue"));u.addEventListener("click",e=>{p.innerHTML="",p.insertAdjacentHTML("beforeend",o(f))});var g=i("9OMvP");(0,n.default)(),(0,g.default)()}();
+//# sourceMappingURL=library.c8971b05.js.map

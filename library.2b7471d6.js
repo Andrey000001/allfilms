@@ -8,5 +8,5 @@ var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:"u
     </div>
     
     </a>
-    </li>`).join(" ")}function c(){s.innerHTML="",s.insertAdjacentHTML("beforeend",l(d))}c(),o.addEventListener("click",c);var n=i("krGWQ");const{watchedList:p,queue:f}=n.default,u=JSON.parse(localStorage.getItem("savedMovieQueue"));f.addEventListener("click",()=>{p.innerHTML="",p.insertAdjacentHTML("beforeend",l(u))});var g=i("4aAp5");(0,r.default)(),(0,g.default)();
-//# sourceMappingURL=library.96b79978.js.map
+    </li>`).join(" ")}function c(e){s.innerHTML="",s.insertAdjacentHTML("beforeend",l(d))}c(),o.addEventListener("click",c);var n=i("krGWQ");const{watchedList:p,queue:f}=n.default,u=JSON.parse(localStorage.getItem("savedMovieQueue"));f.addEventListener("click",e=>{p.innerHTML="",p.insertAdjacentHTML("beforeend",l(u))});var g=i("4aAp5");(0,r.default)(),(0,g.default)();
+//# sourceMappingURL=library.2b7471d6.js.map
