@@ -1,4 +1,5 @@
 import refs from '../refs';
+
 const { watchedList, watched } = refs;
 const dataLocal = JSON.parse(localStorage.getItem('savedMoviesWat')) || [];
 function checkSuccess(dataLocal) {
@@ -25,7 +26,7 @@ function checkSuccess(dataLocal) {
     .join(' ');
 }
 
-function onWatchedandQueue() {
+export function onWatchedandQueue(block) {
   watchedList.innerHTML = '';
   watchedList.insertAdjacentHTML('beforeend', checkSuccess(dataLocal));
 }

@@ -25,6 +25,7 @@ const { cards } = refs;
                  </div>
                  </a>
               </li>`;
+
         })
         .join(' ');
       cards.insertAdjacentHTML('beforeend', markup);

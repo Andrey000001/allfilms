@@ -4,7 +4,7 @@ const { watchedList, queue } = refs;
 
 const dataLocal = JSON.parse(localStorage.getItem('savedMovieQueue'));
 
-queue.addEventListener('click', () => {
+queue.addEventListener('click', (e) => {
   watchedList.innerHTML = '';
   watchedList.insertAdjacentHTML('beforeend', checkSuccess(dataLocal));
 });

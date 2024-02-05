@@ -5,96 +5,100 @@ import fetchMovies from './fetchMovie';
 
 const { API_KEY, BASE_URL_ALL, arrowRight, arrowLeft } = refs;
 
+const reft = {
+  totalPageCount: 0,
+  currentPage: 1,
+  maxPageBtn: 9,
+  nearEdgeThreshold: 3,
+  pageNumbersHtml: document.querySelector('.js-list'),
+};
+
+document.querySelector('.js-list').addEventListener('click', async (e) => {
+  const targetButton = e.target.closest('.js-page-number');
+
+  if (targetButton) {
+    const newPage = parseInt(targetButton.dataset.page);
+    if (!isNaN(newPage)) {
+      await handlePageChange(newPage);
+    }
+  }
+});
+
+arrowRight.addEventListener('click', async () => {
+  if (reft.currentPage < reft.totalPageCount) {
+    const newPage = reft.currentPage + 1;
+    await handlePageChange(newPage);
+  }
+});
+
+arrowLeft.addEventListener('click', async () => {
+  if (reft.currentPage > 1) {
+    const newPage = reft.currentPage - 1;
+    await handlePageChange(newPage);
+  }
+});
+
+
 export default async function updatePage(page = 1) {
-  //Запрос
   const response = await fetch(
     `${BASE_URL_ALL}?api_key=${API_KEY}&page=${page}`
   );
   const data = await response.json();
- 
-  const reft = {
-    totalPageCount: data.total_pages,
-    currentPage: page,
-    pageNumbers: [],
-    maxPageBtn: 9,
-    nearEdgeThreshold: 3,
-    pageNumbersHtml: document.querySelector('.js-list'),
-  };
-  
-  const {
-    totalPageCount,
-    currentPage,
-    pageNumbers,
-    maxPageBtn,
-    nearEdgeThreshold,
-    pageNumbersHtml,
-  } = reft;
 
-  // Проверка на страницы 
-  if (totalPageCount <= maxPageBtn) {
-    for (let i = 1; i <= totalPageCount; i++) {
+  reft.totalPageCount = data.total_pages;
+  reft.currentPage = page;
+
+  const pageNumbers = [];
+
+  if (reft.totalPageCount <= reft.maxPageBtn) {
+    for (let i = 1; i <= reft.totalPageCount; i++) {
       pageNumbers.push(i);
     }
-  }else {
-    // 1                 3  + 1
-    if (currentPage <= nearEdgeThreshold + 1) {
-      for (let i = 1; i <= maxPageBtn - 2; i += 1) {
+  } else {
+    if (reft.currentPage <= reft.nearEdgeThreshold + 1) {
+      for (let i = 1; i <= reft.maxPageBtn - 2; i += 1) {
         pageNumbers.push(i);
       }
       pageNumbers.push('...');
-      pageNumbers.push(totalPageCount);
-    } else if (currentPage >= totalPageCount - nearEdgeThreshold) {
+      pageNumbers.push(reft.totalPageCount);
+    } else if (reft.currentPage >= reft.totalPageCount - reft.nearEdgeThreshold) {
       pageNumbers.push(1);
       pageNumbers.push('...');
-      for (
-        let i = totalPageCount - maxPageBtn + 3;
-        i <= totalPageCount;
-        i += 1
-      ) {
+      for (let i = reft.totalPageCount - reft.maxPageBtn + 3; i <= reft.totalPageCount; i += 1) {
         pageNumbers.push(i);
       }
     } else {
       pageNumbers.push(1);
       pageNumbers.push('...');
-      for (
-        let i = currentPage - nearEdgeThreshold;
-        i <= currentPage + nearEdgeThreshold;
-        i += 1
-      ) {
+      for (let i = reft.currentPage - reft.nearEdgeThreshold; i <= reft.currentPage + reft.nearEdgeThreshold; i += 1) {
         pageNumbers.push(i);
       }
       pageNumbers.push('...');
-      pageNumbers.push(totalPageCount);
+      pageNumbers.push(reft.totalPageCount);
     }
   }
-  //Добовляем isactive на кнопку 
+
   const pageNumbersHTML = pageNumbers
     .map((number) => {
       if (number === '...') {
         return `<span>${number}</span>`;
       } else {
-        const activeClass = page === number ? 'isactive' : '';
+        const activeClass = reft.currentPage === number ? 'isactive' : '';
         return `<button class="js-page-number ${activeClass}" data-page="${number}">${number}</button>`;
       }
     })
     .join('');
 
-
-  pageNumbersHtml.innerHTML = pageNumbersHTML;
-  arrowRight.disabled = page === totalPageCount;
-  arrowLeft.disabled = page === 1;
-
-  document.querySelectorAll('.js-page-number').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const newPage = parseInt(button.dataset.page);
-      console.log(newPage);
-      if (!isNaN(newPage)) {
-        clearPage();
-        const data = await fetchMovies(page);
-        createMarkup(data);
-        updatePage(newPage);
-      }
-    });
-  });
+  reft.pageNumbersHtml.innerHTML = pageNumbersHTML;
+  arrowRight.disabled = reft.currentPage === reft.totalPageCount;
+  arrowLeft.disabled = reft.currentPage === 1;
 }
 
+async function handlePageChange(newPage) {
+  console.log('Запрашиваем страницу номер:', newPage);
+
+  clearPage();
+  const data = await fetchMovies(newPage);
+  createMarkup(data);
+  updatePage(newPage);
+}

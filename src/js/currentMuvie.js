@@ -1,42 +1,40 @@
 import refs from './refs';
 import addMovieToWatched from './addToWatched';
 import addToQueue from './addToQueue';
-
-const { BASE_URL_GENRE, API_KEY ,cards } = refs;
+const { BASE_URL_GENRE, API_KEY, cards } = refs;
 
 const modalContainer = document.createElement('div');
-modalContainer.classList.add('modal');
 document.body.appendChild(modalContainer);
+modalContainer.classList.add('modal');
 modalContainer.style.display = 'none';
+let isModalOpen = true;
 
 export default async function touchMovieInfo() {
   cards.addEventListener('click', onOpenModal);
-
   async function onOpenModal(e) {
     const pageItem = e.target.closest('.page-item');
     if (pageItem) {
       document.body.classList.add('modal-open');
       const gotId = pageItem.dataset.id;
       try {
-        cards.classList.add('loader')
+        cards.classList.add('loader');
         const data = await fetchData(gotId);
-        cards.classList.remove('loader')
+        cards.classList.remove('loader');
         showModal(data);
       } catch (error) {
         console.error('Error fetching movie information:', error);
       }
     }
   }
-
   function showModal(data) {
     const backdrop = createBackdrop(data);
     modalContainer.style.display = 'flex';
     document.body.addEventListener('click', onCloseModal);
     document.body.addEventListener('keydown', onCloseModalKey);
     modalContainer.innerHTML = backdrop;
-
     const modalWatched = document.querySelector('.js-modal__watched');
     const modalQueue = document.querySelector('.js-modal__queue');
+    const modalButtons = document.querySelector('.modal-buttons');
     addMovieToWatched(modalWatched, createLocalStorageSave(data));
     addToQueue(modalQueue, createLocalStorageSave(data));
   }
@@ -50,9 +48,10 @@ export default async function touchMovieInfo() {
   function onCloseModal(e) {
     if (!e.target.closest('.modal-contant')) {
       closeModal();
+    } else if (e.target.closest('.close')) {
+      closeModal();
     }
   }
-
   function closeModal() {
     document.body.classList.remove('modal-open');
     modalContainer.style.display = 'none';
@@ -60,7 +59,7 @@ export default async function touchMovieInfo() {
     document.body.removeEventListener('click', onCloseModal);
   }
 
-  function fetchData(id) {
+  async function fetchData(id) {
     return fetch(`${BASE_URL_GENRE}${id}?api_key=${API_KEY}`).then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -68,7 +67,6 @@ export default async function touchMovieInfo() {
       return response.json();
     });
   }
-
   function createBackdrop(data) {
     const {
       title,
@@ -95,14 +93,16 @@ export default async function touchMovieInfo() {
 
     const genres = data.genres.map(({ name }) => name).join(' | ');
     const overage = vote_average.toString().slice(0, 3);
-
     const overviwW =
       overview.length > 550 ? overview.slice(0, 550) + '...' : overview;
-
+    const svgElement = isModalOpen
+      ? '<svg class="close" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="5" x2="25" y2="25" stroke="black" stroke-width="2" class="cross-line"/><line x1="5" y1="25" x2="25" y2="5" stroke="black" stroke-width="2" class="cross-line"/></svg>'
+      : '';
     return `
       <div class="modal__container">
-        <div class="modal-contant">
-          <img src="https://image.tmdb.org/t/p/w500${poster_path}" alt="${title}"/>
+        <div class="modal-contant" isModalOpen>
+        <button class="modal-closeBtn">${svgElement}</button>
+        <img src="https://image.tmdb.org/t/p/w500${poster_path}" alt="${title}"/>
           <article class="modal-article">
             <h2 class="modal-article__title">${title}</h2>
             <div class="info-modal">
@@ -117,7 +117,7 @@ export default async function touchMovieInfo() {
                 <p class="info-modal__overview">${overviwW}</p>
               </div>
             </div>
-            <div class="modal-buttons">
+             <div class="modal-buttons">
               <button class="modal-buttons__watched modal-button js-modal__watched">add to Watched</button>
               <button class="modal-buttons__queue modal-button js-modal__queue">add to queue</button>
             </div>
